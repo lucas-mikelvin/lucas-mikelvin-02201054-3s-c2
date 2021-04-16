@@ -48,7 +48,13 @@ public class LutadorController {
     }
 
     @PostMapping("/golpe")
-    public ResponseEntity postGolpe(@RequestBody Integer idLutador1, @RequestBody Integer idLutador2 ){
-        return ResponseEntity.status(200).body(repository.findByVida(0.0));
+    public ResponseEntity postGolpe(@RequestParam Integer Lutador1, @RequestParam Integer Lutador2 ){
+        Lutador lutador1 = repository.getOne(Lutador1);
+        Lutador lutador2 = repository.getOne(Lutador2);
+        Double vida = lutador2.getVida() - lutador1.getForcaGolpe();
+        lutador2.setVida(vida);
+        return ResponseEntity.status(200).body(repository.save(lutador2));
     }
+
+
 }
