@@ -27,7 +27,7 @@ public class LutadorController {
     }
 
     @GetMapping
-    public ResponseEntity getLutadores(){
+    public ResponseEntity getLutadores() {
         List<Lutador> lutadores = repository.findAll();
 
         if (lutadores.isEmpty()) {
@@ -38,17 +38,17 @@ public class LutadorController {
     }
 
     @GetMapping("/contagem-vivos")
-    public ResponseEntity getLutadoresVivos(){
-        return ResponseEntity.status(200).body("Lutadores vivos: "+repository.findByVivoTrue().size());
+    public ResponseEntity getLutadoresVivos() {
+        return ResponseEntity.status(200).body("Lutadores vivos: " + repository.findByVivoTrue().size());
     }
 
     @GetMapping("/mortos")
-    public ResponseEntity getLutadoresMortos(){
+    public ResponseEntity getLutadoresMortos() {
         return ResponseEntity.status(200).body(repository.findByVida(0.0));
     }
 
     @PostMapping("/golpe")
-    public ResponseEntity postGolpe(@RequestParam Integer Lutador1, @RequestParam Integer Lutador2 ){
+    public ResponseEntity postGolpe(@RequestParam Integer Lutador1, @RequestParam Integer Lutador2) {
         Lutador lutador1 = repository.getOne(Lutador1);
         Lutador lutador2 = repository.getOne(Lutador2);
         Double vida = lutador2.getVida() - lutador1.getForcaGolpe();
@@ -56,5 +56,9 @@ public class LutadorController {
         return ResponseEntity.status(200).body(repository.save(lutador2));
     }
 
-
+//    @PostMapping("/{id}/concentrar")
+//    public ResponseEntity postGolpe(@PathVariable Integer idLutador){
+//
+//        return ResponseEntity.status(200).body(repository.save());
+//    }
 }
